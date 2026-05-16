@@ -1,0 +1,10 @@
+account_email_domain = "example.com"
+
+tags = {
+  Environment  = "Global"
+  Application  = "LandingZone"
+  Owner        = "CloudPlatform"
+  CostCenter   = "IT-0001"
+  Compliance   = "Enterprise"
+  BackupPolicy = "Critical"
+}

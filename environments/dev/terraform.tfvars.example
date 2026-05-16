@@ -1,0 +1,14 @@
+transit_gateway_id = "tgw-0123456789abcdef0"
+log_bucket_arn     = "arn:aws:s3:::example-enterprise-log-archive"
+windows_sql_ami_id = "ami-0123456789abcdef0"
+
+allowed_management_cidrs = ["10.100.0.0/16"]
+
+tags = {
+  Environment  = "Dev"
+  Application  = "MigrationLandingZone"
+  Owner        = "CloudPlatform"
+  CostCenter   = "IT-0001"
+  Compliance   = "Enterprise"
+  BackupPolicy = "Daily"
+}
