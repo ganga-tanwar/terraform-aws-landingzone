@@ -1,8 +1,5 @@
-data "aws_region" "current" {}
-
 locals {
   nat_gateway_count = var.enable_single_nat_gateway ? 1 : length(var.azs)
-  endpoint_tags     = merge(var.tags, { Environment = var.environment })
 }
 
 resource "aws_vpc" "this" {
@@ -187,26 +184,4 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   vpc_id             = aws_vpc.this.id
 
   tags = merge(var.tags, { Name = "${var.name}-tgw-attachment" })
-}
-
-resource "aws_vpc_endpoint" "gateway" {
-  for_each = var.gateway_endpoints
-
-  vpc_id            = aws_vpc.this.id
-  service_name      = "com.amazonaws.${data.aws_region.current.name}.${each.value}"
-  vpc_endpoint_type = "Gateway"
-  route_table_ids   = aws_route_table.private[*].id
-  tags              = merge(local.endpoint_tags, { Name = "${var.name}-${each.value}-endpoint" })
-}
-
-resource "aws_vpc_endpoint" "interface" {
-  for_each = var.interface_endpoints
-
-  vpc_id              = aws_vpc.this.id
-  service_name        = "com.amazonaws.${data.aws_region.current.name}.${each.value}"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = aws_subnet.app[*].id
-  security_group_ids  = [aws_security_group.workload.id]
-  private_dns_enabled = true
-  tags                = merge(local.endpoint_tags, { Name = "${var.name}-${each.value}-endpoint" })
 }

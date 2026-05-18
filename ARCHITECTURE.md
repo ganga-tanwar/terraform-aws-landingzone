@@ -21,4 +21,4 @@ The workload module provisions five private Windows/SQL EC2 instances with SSM, 
 
 ## Disaster Recovery
 
-`dr_readiness` prepares secondary-region backup vaults, KMS, replica buckets, and Route53 failover records. Workloads are not deployed in `us-west-2` until the business activates a warm standby or pilot-light pattern.
+`dr` prepares secondary-region backup vaults, KMS, replica buckets, and Route53 failover records. Workloads are not deployed in `us-west-2` until the business activates a warm standby or pilot-light pattern.

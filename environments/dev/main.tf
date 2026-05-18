@@ -14,6 +14,18 @@ module "vpc" {
   tags                      = merge(var.tags, { Environment = "Dev" })
 }
 
+module "endpoints" {
+  source = "../../modules/endpoints"
+
+  name               = "dev"
+  environment        = "Dev"
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.app_subnet_ids
+  route_table_ids    = module.vpc.private_route_table_ids
+  security_group_ids = [module.vpc.workload_security_group_id]
+  tags               = merge(var.tags, { Environment = "Dev" })
+}
+
 module "backup" {
   source = "../../modules/backup"
 
@@ -30,7 +42,7 @@ module "mgn_readiness" {
 }
 
 module "dr_readiness" {
-  source = "../../modules/dr_readiness"
+  source = "../../modules/dr"
   providers = {
     aws = aws.dr
   }
@@ -40,7 +52,7 @@ module "dr_readiness" {
 }
 
 module "windows_sql" {
-  source = "../../modules/compute_windows_sql"
+  source = "../../modules/compute"
 
   name_prefix              = "dev-migration"
   vpc_id                   = module.vpc.vpc_id

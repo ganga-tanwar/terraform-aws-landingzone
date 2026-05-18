@@ -54,18 +54,6 @@ variable "enable_single_nat_gateway" {
   default     = false
 }
 
-variable "interface_endpoints" {
-  description = "Interface endpoint service suffixes."
-  type        = set(string)
-  default     = ["ssm", "ssmmessages", "ec2messages", "logs", "monitoring", "kms", "secretsmanager"]
-}
-
-variable "gateway_endpoints" {
-  description = "Gateway endpoint service suffixes."
-  type        = set(string)
-  default     = ["s3", "dynamodb"]
-}
-
 variable "tags" {
   type        = map(string)
   description = "Common tags."
