@@ -1,0 +1,17 @@
+log_bucket_arn = "arn:aws:s3:::example-enterprise-log-archive"
+
+ram_principal_arns = [
+  "arn:aws:organizations::111111111111:organization/o-exampleorgid"
+]
+
+on_premises_cidrs   = ["10.100.0.0/16"]
+customer_gateway_ip = null
+
+tags = {
+  Environment  = "Global"
+  Application  = "LandingZone"
+  Owner        = "CloudPlatform"
+  CostCenter   = "IT-0001"
+  Compliance   = "Enterprise"
+  BackupPolicy = "Critical"
+}
