@@ -13,7 +13,7 @@ variable "enabled_policy_types" {
 variable "organizational_units" {
   description = "Organizational unit names to create under the root."
   type        = set(string)
-  default     = ["Security", "Infrastructure", "Workloads", "Sandbox"]
+  default     = ["Security", "Infrastructure", "Workloads"]
 }
 
 variable "accounts" {
@@ -46,4 +46,10 @@ variable "scp_attachments" {
 variable "tags" {
   description = "Common tags."
   type        = map(string)
+}
+
+variable "has_organization" {
+  type        = bool
+  default     = false
+  description = "Set to true only if the AWS account already has an Organization created."
 }

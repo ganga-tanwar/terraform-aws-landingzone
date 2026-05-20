@@ -40,10 +40,10 @@ module "organization" {
   }
 
   scp_attachments = {
-    prevent_disable_cloudtrail = ["Security", "Infrastructure", "Workloads", "Sandbox"]
-    block_public_s3            = ["Security", "Infrastructure", "Workloads", "Sandbox"]
-    restrict_regions           = ["Security", "Infrastructure", "Workloads", "Sandbox"]
-    restrict_root_usage        = ["Security", "Infrastructure", "Workloads", "Sandbox"]
+    prevent_disable_cloudtrail = ["Security", "Infrastructure", "Workloads"]
+    block_public_s3            = ["Security", "Infrastructure", "Workloads"]
+    restrict_regions           = ["Security", "Infrastructure", "Workloads"]
+    restrict_root_usage        = ["Security", "Infrastructure", "Workloads"]
   }
 
   tags = var.tags

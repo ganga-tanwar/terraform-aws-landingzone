@@ -7,7 +7,7 @@ module "logging" {
 }
 
 module "security_baseline" {
-  source = "../../modules/security_baseline"
+  source = "../../modules/security"
 
   name_prefix           = "enterprise-lz"
   log_bucket_name       = module.logging.log_bucket_name

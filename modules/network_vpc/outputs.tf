@@ -28,10 +28,10 @@ output "workload_security_group_id" {
   description = "Default workload security group ID."
 }
 
-output "transit_gateway_attachment_id" {
-  value       = try(aws_ec2_transit_gateway_vpc_attachment.this[0].id, null)
-  description = "Transit Gateway attachment ID."
-}
+# output "transit_gateway_attachment_id" {
+#   value       = try(aws_ec2_transit_gateway_vpc_attachment.this[0].id, null)
+#   description = "Transit Gateway attachment ID."
+# }
 
 output "private_route_table_ids" {
   value       = aws_route_table.private[*].id

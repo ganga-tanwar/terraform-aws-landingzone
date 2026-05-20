@@ -1,6 +1,6 @@
 variable "primary_region" {
   type    = string
-  default = "us-east-2"
+  default = "eu-north-1"
 }
 
 variable "transit_gateway_id" {
