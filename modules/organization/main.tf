@@ -11,6 +11,34 @@ locals {
   root_id = try(data.aws_organizations_organization.existing.roots[0].id, aws_organizations_organization.this[0].roots[0].id)
 }
 
+
+# resource "aws_organizations_organization" "this" {
+#   aws_service_access_principals = [
+#     "cloudtrail.amazonaws.com",
+#     "config.amazonaws.com",
+#     "sso.amazonaws.com",
+#     "guardduty.amazonaws.com",
+#     "securityhub.amazonaws.com",
+#     "access-analyzer.amazonaws.com",
+#     "backup.amazonaws.com",
+#     "inspector2.amazonaws.com",
+#     "macie.amazonaws.com",
+#     "account.amazonaws.com",
+#     "ram.amazonaws.com",
+#   ]
+
+#   enabled_policy_types = [
+#     "SERVICE_CONTROL_POLICY",
+#     "TAG_POLICY",
+#   ]
+
+#   feature_set = "ALL"
+# }
+
+# locals {
+#   root_id = aws_organizations_organization.this.roots[0].id
+# }
+
 resource "aws_organizations_organizational_unit" "this" {
   for_each  = var.organizational_units
   name      = each.value
@@ -18,19 +46,20 @@ resource "aws_organizations_organizational_unit" "this" {
   tags      = var.tags
 }
 
-resource "aws_organizations_account" "this" {
-  for_each = var.accounts
 
-  name      = each.key
-  email     = each.value.email
-  parent_id = aws_organizations_organizational_unit.this[each.value.ou].id
-  role_name = each.value.role_name
-  tags      = merge(var.tags, each.value.tags)
+# resource "aws_organizations_account" "this" {
+#   for_each = var.accounts
 
-  lifecycle {
-    prevent_destroy = true
-  }
-}
+#   name      = each.key
+#   email     = each.value.email
+#   parent_id = aws_organizations_organizational_unit.this[each.value.ou].id
+#   role_name = each.value.role_name
+#   tags      = merge(var.tags, each.value.tags)
+
+#   lifecycle {
+#     prevent_destroy = true
+#   }
+# }
 
 resource "aws_organizations_policy" "scp" {
   for_each = var.scp_policy_documents

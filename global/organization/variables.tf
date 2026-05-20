@@ -1,7 +1,7 @@
 variable "primary_region" {
   type        = string
   description = "Primary AWS region."
-  default     = "us-east-2"
+  default     = "eu-north-1"
 }
 
 variable "account_email_domain" {

@@ -29,7 +29,7 @@ variable "public_subnet_cidrs" {
 
 variable "app_subnet_cidrs" {
   type        = list(string)
-  description = "Private application subnet CIDRs."
+  description = "Private application/database subnet CIDRs."
 }
 
 variable "db_subnet_cidrs" {

@@ -13,11 +13,11 @@ resource "aws_cloudtrail" "organization" {
   event_selector {
     read_write_type           = "All"
     include_management_events = true
-
-    data_resource {
-      type   = "AWS::S3::Object"
-      values = ["arn:aws:s3:::"]
-    }
+# WARNING it will increase the cost
+    # data_resource {
+    #   type   = "AWS::S3::Object"
+    #   values = ["arn:aws:s3:::"]
+    # }
   }
 }
 

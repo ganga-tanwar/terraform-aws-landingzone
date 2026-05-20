@@ -56,7 +56,7 @@ terraform-aws-landingzone/
 │   ├── mgn_readiness/
 │   ├── network_vpc/
 │   ├── organization/
-│   ├── security_baseline/
+│   ├── security/
 │   ├── transit_gateway/
 │   └── vpn/
 ├── environments/

@@ -176,12 +176,15 @@ resource "aws_flow_log" "this" {
   tags                 = merge(var.tags, { Name = "${var.name}-flow-log" })
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
-  count = var.transit_gateway_id == null ? 0 : 1
+# resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
+#   count = var.transit_gateway_id != null ? 1 : 0
 
-  subnet_ids         = aws_subnet.app[*].id
-  transit_gateway_id = var.transit_gateway_id
-  vpc_id             = aws_vpc.this.id
+#   subnet_ids         = aws_subnet.app[*].id
+#   transit_gateway_id = var.transit_gateway_id
+#   vpc_id             = aws_vpc.this.id
+#   dns_support                                     = "enable"
+#   transit_gateway_default_route_table_association = true
+#   transit_gateway_default_route_table_propagation = true
 
-  tags = merge(var.tags, { Name = "${var.name}-tgw-attachment" })
-}
+#   tags = merge(var.tags, { Name = "${var.name}-tgw-attachment" })
+# }
