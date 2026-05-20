@@ -13,6 +13,18 @@ module "vpc" {
   tags                = merge(var.tags, { Environment = "Prod" })
 }
 
+module "endpoints" {
+  source = "../../modules/endpoints"
+
+  name               = "prod"
+  environment        = "Prod"
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.app_subnet_ids
+  route_table_ids    = module.vpc.private_route_table_ids
+  security_group_ids = [module.vpc.workload_security_group_id]
+  tags               = merge(var.tags, { Environment = "Prod" })
+}
+
 module "backup" {
   source      = "../../modules/backup"
   name_prefix = "prod"
@@ -28,7 +40,7 @@ module "mgn_readiness" {
 }
 
 module "windows_sql" {
-  source = "../../modules/compute_windows_sql"
+  source = "../../modules/compute"
 
   name_prefix              = "prod-migration"
   vpc_id                   = module.vpc.vpc_id

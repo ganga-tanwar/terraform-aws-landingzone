@@ -46,8 +46,10 @@ flowchart LR
 terraform-aws-landingzone/
 ├── modules/
 │   ├── backup/
-│   ├── compute_windows_sql/
-│   ├── dr_readiness/
+│   ├── compute/
+│   ├── dns_resolver/
+│   ├── dr/
+│   ├── endpoints/
 │   ├── hybrid_connectivity/
 │   ├── iam_baseline/
 │   ├── logging/
@@ -55,7 +57,8 @@ terraform-aws-landingzone/
 │   ├── network_vpc/
 │   ├── organization/
 │   ├── security_baseline/
-│   └── transit_gateway/
+│   ├── transit_gateway/
+│   └── vpn/
 ├── environments/
 │   ├── dev/
 │   ├── test/
@@ -113,7 +116,7 @@ The baseline enables organization-ready CloudTrail, AWS Config, GuardDuty, Secur
 
 ## DR Strategy
 
-Initial deployment is DR-ready but does not run duplicate workloads in `us-west-2`. The `dr_readiness` module prepares KMS keys, backup copy configuration, optional S3 CRR, Route53 failover records, and EBS snapshot copy hooks for future enablement.
+Initial deployment is DR-ready but does not run duplicate workloads in `us-west-2`. The `dr` module prepares KMS keys, backup copy configuration, optional S3 CRR, Route53 failover records, and EBS snapshot copy hooks for future enablement.
 
 ## Cost Optimization
 

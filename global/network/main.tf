@@ -21,17 +21,36 @@ module "shared_services_vpc" {
   tags                = merge(var.tags, { Environment = "Shared" })
 }
 
-module "hybrid_connectivity" {
-  source = "../../modules/hybrid_connectivity"
+module "shared_services_endpoints" {
+  source = "../../modules/endpoints"
 
-  name_prefix         = "enterprise-lz"
-  vpc_id              = module.shared_services_vpc.vpc_id
-  subnet_ids          = module.shared_services_vpc.app_subnet_ids
-  transit_gateway_id  = module.transit_gateway.transit_gateway_id
-  on_premises_cidrs   = var.on_premises_cidrs
-  customer_gateway_ip = var.customer_gateway_ip
+  name               = "shared-services"
+  environment        = "Shared"
+  vpc_id             = module.shared_services_vpc.vpc_id
+  subnet_ids         = module.shared_services_vpc.app_subnet_ids
+  route_table_ids    = module.shared_services_vpc.private_route_table_ids
+  security_group_ids = [module.shared_services_vpc.workload_security_group_id]
+  tags               = merge(var.tags, { Environment = "Shared" })
+}
+
+module "dns_resolver" {
+  source = "../../modules/dns_resolver"
+
+  name_prefix       = "enterprise-lz"
+  vpc_id            = module.shared_services_vpc.vpc_id
+  subnet_ids        = module.shared_services_vpc.app_subnet_ids
+  on_premises_cidrs = var.on_premises_cidrs
   dns_forward_domains = {
     "corp.example.com" = ["10.100.0.10", "10.100.0.11"]
   }
   tags = var.tags
+}
+
+module "vpn" {
+  source = "../../modules/vpn"
+
+  name_prefix         = "enterprise-lz"
+  transit_gateway_id  = module.transit_gateway.transit_gateway_id
+  customer_gateway_ip = var.customer_gateway_ip
+  tags                = var.tags
 }
