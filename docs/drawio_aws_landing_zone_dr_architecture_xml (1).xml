@@ -1,0 +1,174 @@
+<mxfile host="app.diagrams.net" modified="2026-05-17T00:00:00.000Z" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram id="landingzone" name="AWS Landing Zone DR Architecture">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Production-Grade AWS Multi-Account Landing Zone with Future DR Readiness" style="text;html=1;strokeColor=none;fillColor=none;fontSize=24;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="20" width="1080" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- AWS Organizations Root -->
+        <mxCell id="rootbox" value="AWS Organizations Root&#xa;SCP Guardrails&#xa;IAM Identity Center (AWS SSO)" style="shape=mxgraph.aws4.management_governance.aws_organizations;grIcon=mxgraph.aws4.management_governance.aws_organizations;html=1;rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=16;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=60;" vertex="1" parent="1">
+          <mxGeometry x="760" y="90" width="320" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Security OU -->
+        <mxCell id="securityou" value="Security OU" style="swimlane;html=1;rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="360" height="360" as="geometry" />
+        </mxCell>
+
+        <mxCell id="logarchive" value="Log Archive Account&#xa;- CloudTrail&#xa;- Config Logs&#xa;- VPC Flow Logs&#xa;- Glacier Archive" style="shape=mxgraph.aws4.storage.simple_storage_service_s3;html=1;rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="securityou">
+          <mxGeometry x="20" y="50" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="securitytooling" value="Security Tooling Account&#xa;- GuardDuty&#xa;- Security Hub&#xa;- Config Aggregator&#xa;- IAM Access Analyzer" style="shape=mxgraph.aws4.storage.simple_storage_service_s3;html=1;rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="securityou">
+          <mxGeometry x="20" y="210" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Infrastructure OU -->
+        <mxCell id="infraou" value="Infrastructure OU" style="swimlane;html=1;rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="240" width="420" height="360" as="geometry" />
+        </mxCell>
+
+        <mxCell id="networkaccount" value="Network Account&#xa;- Transit Gateway&#xa;- Direct Connect Gateway&#xa;- VPN Backup&#xa;- Inspection VPC&#xa;- AWS Network Firewall" style="shape=mxgraph.aws4.networking_content_delivery.transit_gateway;html=1;rounded=1;whiteSpace=wrap;fillColor=#e1f5fe;strokeColor=#0277bd;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="infraou">
+          <mxGeometry x="20" y="50" width="360" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sharedservices" value="Shared Services Account&#xa;- Route53 Resolver&#xa;- AD Integration&#xa;- Patch Management&#xa;- Shared CI/CD Tools" style="shape=mxgraph.aws4.networking_content_delivery.transit_gateway;html=1;rounded=1;whiteSpace=wrap;fillColor=#e1f5fe;strokeColor=#0277bd;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="infraou">
+          <mxGeometry x="20" y="220" width="360" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Workloads OU -->
+        <mxCell id="workloadsou" value="Workloads OU" style="swimlane;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="240" width="560" height="420" as="geometry" />
+        </mxCell>
+
+        <mxCell id="devaccount" value="Dev Account&#xa;10.10.0.0/16&#xa;Application VPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4edda;strokeColor=#28a745;" vertex="1" parent="workloadsou">
+          <mxGeometry x="20" y="50" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="testaccount" value="Test Account&#xa;10.20.0.0/16&#xa;Application VPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#ff9800;" vertex="1" parent="workloadsou">
+          <mxGeometry x="200" y="50" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="prodaccount" value="Prod Account&#xa;10.30.0.0/16&#xa;5 Windows + SQL VMs&#xa;Multi-AZ&#xa;Load Balancers&#xa;Private/Public Subnets&#xa;NAT Gateways" style="shape=mxgraph.aws4.compute.amazon_ec2;html=1;rounded=1;whiteSpace=wrap;fillColor=#f8d7da;strokeColor=#dc3545;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="workloadsou">
+          <mxGeometry x="380" y="40" width="150" height="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="migration" value="Migration Services&#xa;- AWS MGN&#xa;- AWS DMS" style="shape=mxgraph.aws4.migration_transfer.application_migration_service;html=1;rounded=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="workloadsou">
+          <mxGeometry x="200" y="250" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Sandbox OU -->
+        <mxCell id="sandboxou" value="Sandbox OU&#xa;Restricted SCP Policies&#xa;Non-Production Experimentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="260" width="240" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- On-Prem -->
+        <mxCell id="onprem" value="On-Premises Datacenter&#xa;- 5 Windows + SQL Server VMs&#xa;- Active Directory&#xa;- Enterprise Network" style="shape=mxgraph.azure.servers;html=1;rounded=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;spacingTop=50;" vertex="1" parent="1">
+          <mxGeometry x="40" y="700" width="320" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- DR Region -->
+        <mxCell id="drregion" value="Future Disaster Recovery Region&#xa;Warm Standby / Pilot Light&#xa;- Cross Region Replication&#xa;- Backup Vaults&#xa;- Route53 Failover&#xa;- DR Transit Gateway&#xa;- AMI + Snapshot Replication" style="swimlane;html=1;rounded=1;fillColor=#e8daef;strokeColor=#8e44ad;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="620" width="320" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Connections -->
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="rootbox" target="securityou">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="rootbox" target="infraou">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="rootbox" target="workloadsou">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="rootbox" target="sandboxou">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge5" value="Direct Connect + VPN" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=3;strokeColor=#0277bd;" edge="1" parent="1" source="onprem" target="networkaccount">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge6" value="Migration Flow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=3;strokeColor=#28a745;dashed=1;" edge="1" parent="1" source="onprem" target="prodaccount">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge7" value="Centralized Logging" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#d35400;" edge="1" parent="1" source="prodaccount" target="logarchive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge8" value="Security Telemetry" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#c0392b;" edge="1" parent="1" source="prodaccount" target="securitytooling">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge9" value="Cross-Region Replication" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=3;strokeColor=#8e44ad;dashed=1;" edge="1" parent="1" source="prodaccount" target="drregion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Labels -->
+        <mxCell id="label1" value="Enterprise Governance" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="200" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="label2" value="Hybrid Connectivity" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="640" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="label3" value="Future DR Ready" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;fontColor=#8e44ad;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="580" width="220" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    
+        <!-- Additional Governance Labels -->
+        <mxCell id="label4" value="Multi-Account Strategy" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="680" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="label5" value="Centralized Security" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="620" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="label6" value="Shared Networking" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="620" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="label7" value="Production-Grade Landing Zone" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="720" width="320" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- DR Details -->
+        <mxCell id="drdetails" value="RTO: 4 Hours&#xa;RPO: 15 Minutes&#xa;Pilot Light / Warm Standby" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#8e44ad;fontStyle=1;" vertex="1" parent="drregion">
+          <mxGeometry x="20" y="160" width="250" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Additional Replication Flows -->
+        <mxCell id="edge10" value="Backup Replication" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#7d3c98;dashed=1;" edge="1" parent="1" source="logarchive" target="drregion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge11" value="AMI + Snapshot Replication" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#884ea0;dashed=1;" edge="1" parent="1" source="prodaccount" target="drregion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge12" value="Security Aggregation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#b03a2e;" edge="1" parent="1" source="devaccount" target="securitytooling">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge13" value="Centralized Logging" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeWidth=2;strokeColor=#ca6f1e;" edge="1" parent="1" source="testaccount" target="logarchive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
